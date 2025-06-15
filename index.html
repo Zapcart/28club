@@ -6,6 +6,7 @@
   <title>28Club - Play & Win Big!</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.png"> <!-- Replace with your favicon -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
   <style>
     body {
       background: linear-gradient(to bottom, #1a1a2e, #16213e);
@@ -28,6 +29,10 @@
       border-radius: 50%;
       padding: 10px;
       margin: 0 5px;
+    }
+    canvas {
+      margin: 0 auto;
+      display: block;
     }
   </style>
 </head>
@@ -84,7 +89,6 @@
           <p class="text-sm">Mem***BTU</p>
           <p class="text-yellow-400 font-bold">₹40.80</p>
         </div>
-        <!-- Add more winner cards as needed -->
       </div>
     </div>
 
@@ -124,24 +128,43 @@
     <div class="mb-4">
       <h3 class="text-lg font-bold text-yellow-400 mb-2">Lottery</h3>
       <div class="flex space-x-4">
-        <a href="win-go.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+        <div id="win-go" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
           <img src="win-go-icon.png" alt="Win Go" class="h-16 mx-auto mb-2"> <!-- Replace -->
           <p class="text-lg font-bold">Win Go</p>
-        </a>
-        <a href="k3.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+          <div id="win-go-game" class="mt-2">
+            <p id="win-go-timer">Time Left: 150s</p>
+            <p id="win-go-result">Next Color: ?</p>
+            <button id="bet-red" class="px-4 py-2 bg-red-600 rounded-lg m-1">Bet Red</button>
+            <button id="bet-green" class="px-4 py-2 bg-green-600 rounded-lg m-1">Bet Green</button>
+            <button id="bet-violet" class="px-4 py-2 bg-purple-600 rounded-lg m-1">Bet Violet</button>
+          </div>
+        </div>
+        <div id="k3" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
           <img src="k3-icon.png" alt="K3" class="h-16 mx-auto mb-2"> <!-- Replace -->
           <p class="text-lg font-bold">K3</p>
-        </a>
-        <a href="dice.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
-          <img src="dice-icon.png" alt="Dice" class="h-16 mx-auto mb-2"> <!-- Replace -->
-          <p class="text-lg font-bold">Dice</p>
-        </a>
+          <div id="k3-game" class="mt-2">
+            <p id="k3-timer">Time Left: 150s</p>
+            <p id="k3-result">Dice Sum: ?</p>
+            <input id="k3-bet" type="number" min="3" max="18" placeholder="Predict Sum (3-18)" class="p-2 rounded-lg m-1">
+            <button id="k3-bet-btn" class="px-4 py-2 bg-yellow-500 text-black rounded-lg m-1">Bet</button>
+          </div>
+        </div>
+        <div id="mines" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+          <img src="mines-icon.png" alt="Mines" class="h-16 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-lg font-bold">Mines</p>
+          <div id="mines-game" class="mt-2">
+            <canvas id="mines-canvas" width="250" height="250"></canvas>
+            <p id="mines-multiplier">Multiplier: 1.00x</p>
+            <button id="mines-start" class="px-4 py-2 bg-yellow-500 text-black rounded-lg m-1">Start Game</button>
+            <button id="mines-cashout" class="px-4 py-2 bg-green-600 rounded-lg m-1 hidden">Cash Out</button>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 
   <!-- Telegram Button -->
-  <a href="https://t.me/28club" class="fixed bottom-20 right-4">
+  <a href="https://t.me/Desk1Support" class="fixed bottom-20 right-4">
     <img src="telegram-icon.png" alt="Telegram" class="h-12"> <!-- Replace -->
   </a>
 
@@ -168,5 +191,161 @@
       <p class="text-xs">Account</p>
     </a>
   </nav>
+
+  <!-- Game Logic -->
+  <script>
+    // Win Go (Color Prediction)
+    const colors = ['Red', 'Green', 'Violet'];
+    let winGoTimer = 150; // 2.5 minutes in seconds
+
+    function startWinGo() {
+      const seed = Math.random().toString();
+      const hash = sha256(seed); // Provably fair (simplified)
+      const result = colors[parseInt(hash.slice(-2), 16) % 3];
+      document.getElementById('win-go-result').innerText = `Next Color: ${result}`;
+      winGoTimer = 150;
+      updateWinGoTimer();
+    }
+
+    function updateWinGoTimer() {
+      document.getElementById('win-go-timer').innerText = `Time Left: ${winGoTimer}s`;
+      if (winGoTimer > 0) {
+        winGoTimer--;
+        setTimeout(updateWinGoTimer, 1000);
+      } else {
+        startWinGo();
+      }
+    }
+
+    document.getElementById('bet-red').addEventListener('click', () => placeBet('Red'));
+    document.getElementById('bet-green').addEventListener('click', () => placeBet('Green'));
+    document.getElementById('bet-violet').addEventListener('click', () => placeBet('Violet'));
+
+    function placeBet(color) {
+      alert(`Bet placed on ${color}! (Backend integration needed)`);
+    }
+
+    startWinGo();
+
+    // K3 (Dice Game)
+    let k3Timer = 150;
+
+    function startK3() {
+      const seed = Math.random().toString();
+      const hash = sha256(seed);
+      const dice1 = (parseInt(hash.slice(-2), 16) % 6) + 1;
+      const dice2 = (parseInt(hash.slice(-4, -2), 16) % 6) + 1;
+      const dice3 = (parseInt(hash.slice(-6, -4), 16) % 6) + 1;
+      const sum = dice1 + dice2 + dice3;
+      document.getElementById('k3-result').innerText = `Dice Sum: ${sum}`;
+      k3Timer = 150;
+      updateK3Timer();
+    }
+
+    function updateK3Timer() {
+      document.getElementById('k3-timer').innerText = `Time Left: ${k3Timer}s`;
+      if (k3Timer > 0) {
+        k3Timer--;
+        setTimeout(updateK3Timer, 1000);
+      } else {
+        startK3();
+      }
+    }
+
+    document.getElementById('k3-bet-btn').addEventListener('click', () => {
+      const bet = parseInt(document.getElementById('k3-bet').value);
+      if (bet >= 3 && bet <= 18) {
+        alert(`Bet placed on sum ${bet}! (Backend integration needed)`);
+      } else {
+        alert('Please enter a valid sum between 3 and 18.');
+      }
+    });
+
+    startK3();
+
+    // Mines (Phaser.js)
+    const minesConfig = {
+      type: Phaser.AUTO,
+      width: 250,
+      height: 250,
+      parent: 'mines-game',
+      scene: {
+        preload: minesPreload,
+        create: minesCreate,
+        update: minesUpdate
+      }
+    };
+
+    let minesGame = null;
+    let grid = [];
+    let multiplier = 1.00;
+    let gameActive = false;
+
+    function minesPreload() {
+      this.load.image('tile', 'tile.png'); // Replace
+      this.load.image('gem', 'gem.png'); // Replace
+      this.load.image('mine', 'mine.png'); // Replace
+    }
+
+    function minesCreate() {
+      for (let i = 0; i < 5; i++) {
+        grid[i] = [];
+        for (let j = 0; j < 5; j++) {
+          let tile = this.add.image(50 * i + 25, 50 * j + 25, 'tile').setInteractive();
+          const seed = Math.random().toString();
+          const hash = sha256(seed);
+          grid[i][j] = { isMine: parseInt(hash.slice(-2), 16) % 10 < 2, revealed: false }; // 20% chance of mine
+          tile.on('pointerdown', () => revealTile(i, j, this));
+        }
+      }
+    }
+
+    function minesUpdate() {}
+
+    function revealTile(i, j, scene) {
+      if (!gameActive || grid[i][j].revealed) return;
+      grid[i][j].revealed = true;
+      if (grid[i][j].isMine) {
+        scene.add.image(50 * i + 25, 50 * j + 25, 'mine');
+        alert('Game Over! You hit a mine.');
+        gameActive = false;
+        document.getElementById('mines-start').classList.remove('hidden');
+        document.getElementById('mines-cashout').classList.add('hidden');
+      } else {
+        scene.add.image(50 * i + 25, 50 * j + 25, 'gem');
+        multiplier += 0.1;
+        document.getElementById('mines-multiplier').innerText = `Multiplier: ${multiplier.toFixed(2)}x`;
+        document.getElementById('mines-cashout').classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('mines-start').addEventListener('click', () => {
+      if (minesGame) minesGame.destroy(true);
+      grid = [];
+      multiplier = 1.00;
+      document.getElementById('mines-multiplier').innerText = `Multiplier: 1.00x`;
+      minesGame = new Phaser.Game(minesConfig);
+      gameActive = true;
+      document.getElementById('mines-start').classList.add('hidden');
+    });
+
+    document.getElementById('mines-cashout').addEventListener('click', () => {
+      alert(`Cashed out at ${multiplier.toFixed(2)}x! (Backend integration needed)`);
+      gameActive = false;
+      document.getElementById('mines-start').classList.remove('hidden');
+      document.getElementById('mines-cashout').classList.add('hidden');
+    });
+
+    // SHA-256 for Provably Fair (Simplified)
+    function sha256(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return hash.toString(16);
+    }
+  </script>
 </body>
 </html>
