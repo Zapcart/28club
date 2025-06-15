@@ -5,64 +5,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>28Club - Play & Win Big!</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="icon" type="image/png" href="favicon.png"> <!-- Add your favicon later -->
+  <link rel="icon" type="image/png" href="favicon.png"> <!-- Replace with your favicon -->
   <style>
     body {
-      background: linear-gradient(to right, #a855f7, #ec4899, #ef4444);
+      background: linear-gradient(to bottom, #1a1a2e, #16213e);
+      color: #e0e0e0;
+      font-family: 'Arial', sans-serif;
     }
     .glow {
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    .winner-card {
+      background: linear-gradient(to right, #2c2c54, #4b4b8c);
+      border-radius: 10px;
+      padding: 10px;
+      margin-right: 10px;
+      min-width: 150px;
+      text-align: center;
+    }
+    .game-icon {
+      background: linear-gradient(to bottom, #2c2c54, #4b4b8c);
+      border-radius: 50%;
+      padding: 10px;
+      margin: 0 5px;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center text-white font-sans">
-  <!-- Header -->
-  <header class="w-full py-4 bg-white bg-opacity-10 backdrop-blur-md fixed top-0 flex justify-between items-center px-6">
+<body class="min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="w-full py-2 px-4 flex justify-between items-center bg-opacity-80 bg-black">
     <div class="flex items-center">
-      <img src="logo.png" alt="28Club Logo" class="h-10 mr-2"> <!-- Replace with your logo -->
-      <h1 class="text-2xl font-bold text-white">28Club</h1>
+      <img src="logo.png" alt="28Club Logo" class="h-8 mr-2"> <!-- Replace with your logo -->
+      <h1 class="text-xl font-bold text-yellow-400">28Club</h1>
     </div>
-    <div>
-      <a href="login.html" class="px-4 py-2 bg-pink-600 rounded-lg hover:bg-pink-700 mr-2">Login</a>
-      <a href="register.html" class="px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-700">Register</a>
+    <div class="flex items-center space-x-2">
+      <img src="cloud-icon.png" alt="Cloud" class="h-6"> <!-- Replace -->
+      <img src="flag-icon.png" alt="Flag" class="h-6"> <!-- Replace -->
+      <span class="text-white">EN</span>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="flex-grow flex flex-col items-center justify-center text-center mt-16 px-4">
-    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 glow">Welcome to 28Club!</h2>
-    <p class="text-lg md:text-xl mb-8 max-w-2xl">Play exciting games like Color Prediction and Mines. Bet real money, win big, and enjoy instant payouts!</p>
-
-    <!-- Game Tiles -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl w-full">
-      <a href="color-prediction.html" class="bg-white bg-opacity-20 p-6 rounded-lg hover:bg-opacity-30 transition glow">
-        <img src="color-game.png" alt="Color Prediction" class="h-24 mx-auto mb-4"> <!-- Replace with game image -->
-        <h3 class="text-2xl font-bold mb-2">Color Prediction</h3>
-        <p>Predict the next color and multiply your bet! Easy, fun, and rewarding.</p>
-      </a>
-      <a href="mines.html" class="bg-white bg-opacity-20 p-6 rounded-lg hover:bg-opacity-30 transition glow">
-        <img src="mines-game.png" alt="Mines" class="h-24 mx-auto mb-4"> <!-- Replace with game image -->
-        <h3 class="text-2xl font-bold mb-2">Mines</h3>
-        <p>Avoid the mines, uncover gems, and cash out with huge multipliers!</p>
-      </a>
+  <main class="flex-grow px-4 py-2">
+    <!-- Banner -->
+    <div class="w-full rounded-lg overflow-hidden mb-4">
+      <img src="banner.png" alt="Welcome to 28Club" class="w-full h-40 object-cover"> <!-- Replace with banner -->
+      <div class="absolute top-16 left-4 text-white">
+        <h2 class="text-2xl font-bold">Welcome to 28Club Games</h2>
+        <p class="text-lg">New Member First Deposit Bonus</p>
+      </div>
     </div>
 
-    <!-- Referral Banner -->
-    <div class="mt-12 bg-purple-600 bg-opacity-80 p-6 rounded-lg max-w-2xl w-full text-center glow">
-      <h3 class="text-2xl font-bold mb-2">Invite Friends, Earn Big!</h3>
-      <p class="mb-4">Refer your friends to 28Club and earn ₹100 when they deposit!</p>
-      <a href="referral.html" class="px-6 py-2 bg-red-600 rounded-lg hover:bg-red-700">Get Your Referral Link</a>
+    <!-- Welcome Message -->
+    <div class="bg-yellow-600 bg-opacity-20 rounded-lg p-4 mb-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="speaker-icon.png" alt="Speaker" class="h-6 mr-2"> <!-- Replace -->
+        <p>Welcome to 28Club game platform, we will serve you wholeheartedly!</p>
+      </div>
+      <button class="px-4 py-1 bg-yellow-500 text-black rounded-lg">Detail</button>
+    </div>
+
+    <!-- Winning Information -->
+    <div class="mb-4">
+      <h3 class="text-lg font-bold text-yellow-400 mb-2">Winning Information</h3>
+      <div class="flex overflow-x-auto">
+        <div class="winner-card">
+          <img src="win-go-icon.png" alt="Win Go" class="h-12 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-sm">Mem***JZB</p>
+          <p class="text-yellow-400 font-bold">₹50.00</p>
+        </div>
+        <div class="winner-card">
+          <img src="win-go-icon.png" alt="Win Go" class="h-12 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-sm">Mem***CYC</p>
+          <p class="text-yellow-400 font-bold">₹98,000.00</p>
+        </div>
+        <div class="winner-card">
+          <img src="win-go-icon.png" alt="Win Go" class="h-12 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-sm">Mem***BTU</p>
+          <p class="text-yellow-400 font-bold">₹40.80</p>
+        </div>
+        <!-- Add more winner cards as needed -->
+      </div>
+    </div>
+
+    <!-- Game Categories -->
+    <div class="flex overflow-x-auto mb-4">
+      <div class="game-icon flex-shrink-0">
+        <img src="lobby-icon.png" alt="Lobby" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Lobby</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="lottery-icon.png" alt="Lottery" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Lottery</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="popular-icon.png" alt="Popular" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Popular</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="mini-game-icon.png" alt="Mini Game" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Mini Game</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="casino-icon.png" alt="Casino" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Casino</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="slots-icon.png" alt="Slots" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Slots</p>
+      </div>
+      <div class="game-icon flex-shrink-0">
+        <img src="sport-icon.png" alt="Sport" class="h-8"> <!-- Replace -->
+        <p class="text-xs text-center mt-1">Sport</p>
+      </div>
+    </div>
+
+    <!-- Lottery Section -->
+    <div class="mb-4">
+      <h3 class="text-lg font-bold text-yellow-400 mb-2">Lottery</h3>
+      <div class="flex space-x-4">
+        <a href="win-go.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+          <img src="win-go-icon.png" alt="Win Go" class="h-16 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-lg font-bold">Win Go</p>
+        </a>
+        <a href="k3.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+          <img src="k3-icon.png" alt="K3" class="h-16 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-lg font-bold">K3</p>
+        </a>
+        <a href="dice.html" class="bg-gray-800 rounded-lg p-4 flex-1 text-center">
+          <img src="dice-icon.png" alt="Dice" class="h-16 mx-auto mb-2"> <!-- Replace -->
+          <p class="text-lg font-bold">Dice</p>
+        </a>
+      </div>
     </div>
   </main>
 
-  <!-- Footer -->
-  <footer class="w-full py-4 bg-white bg-opacity-10 backdrop-blur-md text-center">
-    <p>&copy; 2025 28Club. All rights reserved. | <a href="terms.html" class="underline">Terms</a> | <a href="privacy.html" class="underline">Privacy</a></p>
-  </footer>
+  <!-- Telegram Button -->
+  <a href="https://t.me/28club" class="fixed bottom-20 right-4">
+    <img src="telegram-icon.png" alt="Telegram" class="h-12"> <!-- Replace -->
+  </a>
 
-  <!-- JavaScript (Optional for future interactivity) -->
-  <script>
-    // Add any interactivity here (e.g., button animations)
-  </script>
+  <!-- Bottom Navigation -->
+  <nav class="w-full py-2 bg-gray-900 flex justify-around items-center fixed bottom-0">
+    <a href="promotion.html" class="flex flex-col items-center">
+      <img src="promotion-icon.png" alt="Promotion" class="h-6"> <!-- Replace -->
+      <p class="text-xs">Promotion</p>
+    </a>
+    <a href="activity.html" class="flex flex-col items-center">
+      <img src="activity-icon.png" alt="Activity" class="h-6"> <!-- Replace -->
+      <p class="text-xs">Activity</p>
+    </a>
+    <a href="home.html" class="flex flex-col items-center">
+      <img src="home-icon.png" alt="Home" class="h-6"> <!-- Replace -->
+      <p class="text-xs text-yellow-400">Home</p>
+    </a>
+    <a href="wallet.html" class="flex flex-col items-center">
+      <img src="wallet-icon.png" alt="Wallet" class="h-6"> <!-- Replace -->
+      <p class="text-xs">Wallet</p>
+    </a>
+    <a href="account.html" class="flex flex-col items-center">
+      <img src="account-icon.png" alt="Account" class="h-6"> <!-- Replace -->
+      <p class="text-xs">Account</p>
+    </a>
+  </nav>
 </body>
 </html>
